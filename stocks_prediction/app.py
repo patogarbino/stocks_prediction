@@ -7,7 +7,7 @@ st.title('Stock market performance prediction')
 
 
 
-st.markdown(Choose a tick to predict the performance of the share)
+st.markdown('Choose a tick to predict the performance of the share')
 
 
 tick = st.date_input(label='TICK')
