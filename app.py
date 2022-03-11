@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-from streamlit_lottie import st_lottie
+
 
 st.set_page_config(page_title="My Webpage", page_icon=":tada:", layout="wide")
 
@@ -33,7 +33,7 @@ with st.container():
 
 
     with right_column:
-        st_lottie(lottie_coding, height=300, key="coding")
+        
 
 
 
