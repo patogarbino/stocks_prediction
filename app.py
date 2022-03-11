@@ -28,18 +28,5 @@ with st.container():
         st.write("##")
 
     st.markdown('Choose a tick to predict the performance of the share')
-    tick = st.input(label='TICK')
+    tick = st.text_input(label='TICK')
     button=st.button('Predict')
-
-
-    with right_column:
-        
-
-
-
-
-
-st.write('Ticks availables')
-
-st.write('APPL=Apple')
-st.write()
