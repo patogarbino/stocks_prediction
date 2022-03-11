@@ -1,21 +1,21 @@
-#import streamlit as st
-#import requests
+import streamlit as st
+import requests
 
-#t.title('Stock market performance prediction')
+st.title('Stock market performance prediction')
 
 #st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 
 
 
-#st.markdown(Choose a tick to predict the performance of the share)
+st.markdown('Choose a tick to predict the performance of the share')
 
 
-#tick = st.date_input(label='TICK')
+tick = st.date_input(label='TICK')
 
-#button=st.button('Predict')
+button=st.button('Predict')
 
 
-#st.write('Ticks availables')
+st.write('Ticks availables')
 
-#st.write('APPL=Apple')
-#st.write()
+st.write('APPL=Apple')
+st.write()
