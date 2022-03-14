@@ -6,7 +6,7 @@ from streamlit_tags import st_tags
 from utils import merge_data, clean_data
 import joblib
 
-model= joblib.load('model (1).joblib')
+model= joblib.load('model.joblib')
 
 st.set_page_config(page_title="My Webpage",page_icon=":bar_chart:", layout="wide")
 
