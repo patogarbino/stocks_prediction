@@ -3,8 +3,10 @@ import requests
 import pandas as pd
 from streamlit_lottie import st_lottie
 from streamlit_tags import st_tags
+from utils import merge_data, clean_data
+import joblib
 
-
+model= joblib.load('model (1).joblib')
 
 st.set_page_config(page_title="My Webpage",page_icon=":bar_chart:", layout="wide")
 
@@ -33,21 +35,30 @@ with st.container():
 #st.write(f'<style>{CSS}</style>', unsafe_allow_html=True)
 
 # ---- PREDICTION ----
-# with st.container():
-#     st.write("---")
-#     left_column, right_column = st.columns(2)
-#     with left_column:
+with st.container():
+    st.write("---")
+    left_column, right_column = st.columns(2)
+with left_column:
 
-#         st.write("##")
+    st.write("##")
 
-#         st.markdown('Choose a ticker to predict the performance of the share')
-#         tick = st.text_input(label='TICKER')
-#         # button=st.button('Predict')
+    st.markdown('Choose a ticker to predict the performance of the share')
+    ticker = st.text_input(label='TICKER')
 
-#     with right_column:
-#         lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
+    button=st.button('Predict')
 
-#         st_lottie(lottie_image)
+    if button:
+
+        df=merge_data(ticker)
+        ticker_to_predict=clean_data(df)
+        response=model.predict(ticker_to_predict)
+        st.write(response)
+
+
+with right_column:
+        lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
+
+        st_lottie(lottie_image)
 
 
 
@@ -83,7 +94,7 @@ with st.container():
 
         button=st.button('Predict')
 
-    with right_column:
+with right_column:
         lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
 
         st_lottie(lottie_image)
