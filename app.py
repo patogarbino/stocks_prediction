@@ -51,8 +51,12 @@ with left_column:
 
         df=merge_data(ticker)
         ticker_to_predict=clean_data(df)
-        response=model.predict(ticker_to_predict)
-        st.write(response)
+        response=model.predict(ticker_to_predict)[0]
+        if response == 1:
+            st.write('We recommend to invest in this company')
+        else:
+            st.write("We don't recommend to invest in this company")
+
 
 
 with right_column:
