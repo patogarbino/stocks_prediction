@@ -42,7 +42,7 @@ with left_column:
 
     st.write("##")
 
-    st.text_input('Choose a ticker to predict the performance of the share')
+    ticker=st.text_input('Choose a ticker to predict the performance of the share')
 
 
     button=st.button('Predict')
