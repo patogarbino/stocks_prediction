@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
+import numpy as np
 
 def get_data(ticker, function):
 
@@ -56,6 +57,8 @@ def  clean_data(df):
     preproc_data = pd.read_csv('data/preproc_data.csv')
 
     df.drop(columns = cols_to_drop,inplace = True)
+    df = df.replace('None',np.nan)
+
     pipeline = make_pipeline(SimpleImputer(strategy='median'))
     pipeline.fit(preproc_data)
     df  = pipeline.transform(df)

@@ -20,6 +20,7 @@ def load_lottieurl(url: str):
     return r.json()
 
 
+names = pd.read_csv("company_names.csv")
 
 
 
@@ -46,16 +47,30 @@ with left_column:
 
 
     button=st.button('Predict')
+    keyError='quarterlyReports'
 
     if button:
+        if ticker in list(names.Symbol):
 
-        df=merge_data(ticker)
-        ticker_to_predict=clean_data(df)
-        response=model.predict(ticker_to_predict)[0]
-        if response == 1:
-            st.write('We recommend to invest in this company')
+
+            #try:
+
+            df=merge_data(ticker)
+            ticker_to_predict=clean_data(df)
+            response=model.predict(ticker_to_predict)[0]
+
+
+
+            if response:
+                if response == 1:
+                    st.write('We recommend to invest in this company')
+                else:
+                    st.write("We don't recommend to invest in this company")
+
+            #except:
+                st.write('try again later')
         else:
-            st.write("We don't recommend to invest in this company")
+            st.write('The ticker is not in our database')
 
     st.write("##")
 
@@ -63,7 +78,7 @@ with left_column:
 
 
 
-    names = pd.read_csv("company_names.csv")
+
 
     ticker= st_tags(
                         label='**Insert the name of the company and press ENTER to search:**',
