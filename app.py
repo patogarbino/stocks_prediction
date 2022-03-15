@@ -42,8 +42,8 @@ with left_column:
 
     st.write("##")
 
-    st.markdown('Choose a ticker to predict the performance of the share')
-    ticker = st.text_input(label='TICKER')
+    st.text_input('Choose a ticker to predict the performance of the share')
+
 
     button=st.button('Predict')
 
@@ -57,67 +57,37 @@ with left_column:
         else:
             st.write("We don't recommend to invest in this company")
 
+    st.write("##")
+
+    st.write('Dont you know the ticker of the company you are looking for?')
 
 
+
+    names = pd.read_csv("company_names.csv")
+
+    ticker= st_tags(
+                        label='**Insert the name of the company and press ENTER to search:**',
+                        text='Example: Apple',
+                        value='',
+                        suggestions=list(names['Name'].unique()),
+                        maxtags=1,
+                        key="asd")
+
+
+
+
+
+
+    try:
+        if ticker:
+            company = names[names['Name'] == ticker[0]].iloc[0,0]
+
+            st.markdown(f'###  The ticker is: {company}')
+
+    except:
+
+        st.write('error')
 with right_column:
         lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
 
         st_lottie(lottie_image)
-
-
-
-
-
-with st.container():
-    left_column, right_column = st.columns(2)
-    with left_column:
-
-        st.write("##")
-
-        st.write('Dont you know the ticker of the company you are looking for?')
-
-
-        #names = pd.read_csv('company_names.csv')
-        names = pd.read_csv("company_names.csv")
-
-        empresa = st_tags(
-                            label='**Text below the name of the company:**',
-                            text='Example: Apple',
-                            value='',
-                            suggestions=list(names['Name'].unique()),
-                            maxtags=1,
-                            key="asd")
-
-        try:
-            if empresa:
-                empresax = names[names['Name'] == empresa[0]].iloc[0,0]
-                st.markdown(f'###  the ticker is: {empresax}')
-
-        except:
-            print("")
-
-        button=st.button('Predict')
-
-with right_column:
-        lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
-
-        st_lottie(lottie_image)
-
-        #st.write(empresax)
-
-        # try:
-        #     empresa = st_tags(
-        #                     label='**Text below the name of the company:**',
-        #                     text='Example: Zara',
-        #                     value=['apple'],
-        #                     suggestions=['apple', 'microsoft', 'tesla', 'facebook', 'le wagon', 'amazon', 'zara', 'mercadolibre', 'ebay'],
-        #                     maxtags=1,
-        #                     key="asd").lower()
-        #     empresa = names[names['Name'] == empresa].iloc[0,0]
-        #     st.markdown(f'###  the ticker is: {empresa}')
-
-        # except:
-        #      if empresa:
-        #          st.markdown(f'### The company {empresa} is not in our database.')
-
-        # button_find=st.button('Find ticker')
