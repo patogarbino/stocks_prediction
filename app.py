@@ -53,22 +53,22 @@ with left_column:
             if ticker in list(names.Symbol):
 
 
-                try:
+                #try:
 
-                    df=merge_data(ticker)
-                    ticker_to_predict=clean_data(df)
-                    response=model.predict(ticker_to_predict)
-
-
+                df=merge_data(ticker)
+                ticker_to_predict=clean_data(df)
+                response=model.predict(ticker_to_predict)
 
 
-                    if response [0][1] >0.5:
-                        st.markdown(f"### There is {response[0][1]:.2%} of chance that the share performs better than the market next year")
-                    else:
-                        st.markdown(f"### There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year")
 
-                except:
-                    st.write('### Try again later')
+
+                if response [0][1] > 0.5:
+                    st.markdown(f"### There is {response[0][1]:.2%} of chance that the share performs better than the market next year")
+                else:
+                    st.markdown(f"### There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year")
+
+                #except:
+                   # st.write('### Try again later')
             else:
                 st.write('### The ticker is not in our database')
 
