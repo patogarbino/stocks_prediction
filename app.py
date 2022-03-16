@@ -63,9 +63,9 @@ with left_column:
 
 
                 if response[0][1] > 0.5:
-                    st.markdown(f'###  There is  {response[0][1]} of chance that the share performs better than the market next year')
+                    st.markdown(f'###  There is  {response[0][1]:.2%}  of chance that the share performs better than the market next year')
                 else:
-                    st.markdown(f"### There is{response[0][0]} of chance that the share doesn't perform better than the market next year")
+                    st.markdown(f"### There is{response[0][0]:.2%}  of chance that the share doesn't perform better than the market next year")
 
             except:
                 st.write('### Try again later')
