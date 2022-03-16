@@ -29,7 +29,7 @@ names = pd.read_csv("company_names.csv")
 with st.container():
     st.title("Stock market performance prediction")
     st.write(
-        "Choose a ticker and predict the performance of a share in accordance with the market performance next year"
+        "Choose a tick and predict the performance of a share against the market performance"
     )
 
 
@@ -40,69 +40,66 @@ with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
 with left_column:
+    with st.container():
+        st.write("##")
 
-    st.write("##")
-
-    ticker=st.text_input('Choose a ticker to predict the performance of the share')
-
-
-    button=st.button('Predict')
-    keyError='quarterlyReports'
-
-    if button:
-        if ticker in list(names.Symbol):
+        ticker=st.text_input('Choose a ticker to predict the performance of the share')
 
 
-            try:
+        button=st.button('Predict')
+        keyError='quarterlyReports'
 
-                df=merge_data(ticker)
-                ticker_to_predict=clean_data(df)
-                response=model.predict_proba(ticker_to_predict)
-
-
+        if button:
+            if ticker in list(names.Symbol):
 
 
-                if response[0][1] > 0.5:
-                    st.markdown(f'###  There is  {response[0][1]:.2%}  of chance that the share performs better than the market next year')
-                else:
-                    st.markdown(f"### There is  {response[0][0]:.2%}  of chance that the share doesn't perform better than the market next year")
+                try:
 
-            except:
-                st.write('### Try again later')
-        else:
-            st.write('### The ticker is not in our database')
-
-    st.write("##")
-
-    st.write('Dont you know the ticker of the company you are looking for?')
+                    df=merge_data(ticker)
+                    ticker_to_predict=clean_data(df)
+                    response=model.predict(ticker_to_predict)[0]
 
 
 
 
+                    if response == 1:
+                        st.markdown('### There is 70% of chance that the share performs better than the market next year')
+                    else:
+                        st.markdown("### There is 70% of chance that the share doesn't perform better than the market next year")
 
-    ticker= st_tags(
-                        label='**Insert the name of the company and press ENTER to search:**',
-                        text='Example: Apple',
-                        value='',
-                        suggestions=list(names['Name'].unique()),
-                        maxtags=1,
-                        key="asd")
+                except:
+                    st.write('### Try again later')
+            else:
+                st.write('### The ticker is not in our database')
+
+    with st.container():
+
+        st.write("##")
+
+        st.write('Dont you know the ticker of the company you are looking for?')
 
 
 
+        ticker= st_tags(
+                            label='**Insert the name of the company and press ENTER to search:**',
+                            text='Example: Apple',
+                            value='',
+                            suggestions=list(names['Name'].unique()),
+                            maxtags=1,
+                            key="asd")
 
+        try:
+            if ticker:
+                company = names[names['Name'] == ticker[0]].iloc[0,0]
 
+                st.markdown(f'###  The ticker is: {company}')
 
-    try:
-        if ticker:
-            company = names[names['Name'] == ticker[0]].iloc[0,0]
+        except:
 
-            st.markdown(f'###  The ticker is: {company}')
-
-    except:
-
-        st.write('error')
+            st.write('error')
 with right_column:
+
+
         lottie_image = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_ymyikn6l.json")
 
         st_lottie(lottie_image)
