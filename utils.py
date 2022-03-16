@@ -4,12 +4,12 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
 import numpy as np
 
-def get_data(ticker, function):
+def get_data(ticker, function,key):
 
     url = 'https://www.alphavantage.co/query'
     params = {'function': function,
           'symbol': ticker,
-          'apikey':'9Q6MRAOS3OPYVK3R'
+          'apikey':key
     }
 
     return requests.get(url,params = params).json()
@@ -18,22 +18,22 @@ def merge_data (ticker):
 
     df = pd.DataFrame()
 
-    r = get_data(ticker,'INCOME_STATEMENT')
+    r = get_data(ticker,'INCOME_STATEMENT','RE7IZFZJVQHVS0FP')
     response = pd.DataFrame(r['quarterlyReports'])
     response.drop(columns = 'reportedCurrency',inplace = True)
     df = pd.concat([df,response], axis= 1)
 
-    r = get_data(ticker,'BALANCE_SHEET')
+    r = get_data(ticker,'BALANCE_SHEET','M4JMED658AGMIEXK')
     response = pd.DataFrame(r['quarterlyReports'])
     response.drop(columns = 'reportedCurrency',inplace = True)
     df = df.merge(response, on = 'fiscalDateEnding')
 
-    r = get_data(ticker,'CASH_FLOW')
+    r = get_data(ticker,'CASH_FLOW','9Q6MRAOS3OPYVK3R')
     response = pd.DataFrame(r['quarterlyReports'])
     response.drop(columns = 'reportedCurrency',inplace = True)
     df = df.merge(response, on = 'fiscalDateEnding')
 
-    r = get_data(ticker,'EARNINGS')
+    r = get_data(ticker,'EARNINGS','W6ASJZ1LC2DTIE1T')
     response = pd.DataFrame(r['quarterlyEarnings'])
     df = df.merge(response, on = 'fiscalDateEnding')
 
