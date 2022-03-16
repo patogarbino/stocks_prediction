@@ -16,26 +16,34 @@ def get_data(ticker, function,key):
 
 def merge_data (ticker):
 
-    df = pd.DataFrame()
+    df = pd.read_df('data/stocks_quarterly.csv')
+    tickers = list(df.symbol.unique())
 
-    r = get_data(ticker,'INCOME_STATEMENT','RE7IZFZJVQHVS0FP')
-    response = pd.DataFrame(r['quarterlyReports'])
-    response.drop(columns = 'reportedCurrency',inplace = True)
-    df = pd.concat([df,response], axis= 1)
+    if ticker in tickers :
+        df = df[df['symbol']== ticker]
 
-    r = get_data(ticker,'BALANCE_SHEET','M4JMED658AGMIEXK')
-    response = pd.DataFrame(r['quarterlyReports'])
-    response.drop(columns = 'reportedCurrency',inplace = True)
-    df = df.merge(response, on = 'fiscalDateEnding')
+    else:
 
-    r = get_data(ticker,'CASH_FLOW','9Q6MRAOS3OPYVK3R')
-    response = pd.DataFrame(r['quarterlyReports'])
-    response.drop(columns = 'reportedCurrency',inplace = True)
-    df = df.merge(response, on = 'fiscalDateEnding')
+        df = pd.DataFrame()
 
-    r = get_data(ticker,'EARNINGS','W6ASJZ1LC2DTIE1T')
-    response = pd.DataFrame(r['quarterlyEarnings'])
-    df = df.merge(response, on = 'fiscalDateEnding')
+        r = get_data(ticker,'INCOME_STATEMENT','RE7IZFZJVQHVS0FP')
+        response = pd.DataFrame(r['quarterlyReports'])
+        response.drop(columns = 'reportedCurrency',inplace = True)
+        df = pd.concat([df,response], axis= 1)
+
+        r = get_data(ticker,'BALANCE_SHEET','M4JMED658AGMIEXK')
+        response = pd.DataFrame(r['quarterlyReports'])
+        response.drop(columns = 'reportedCurrency',inplace = True)
+        df = df.merge(response, on = 'fiscalDateEnding')
+
+        r = get_data(ticker,'CASH_FLOW','9Q6MRAOS3OPYVK3R')
+        response = pd.DataFrame(r['quarterlyReports'])
+        response.drop(columns = 'reportedCurrency',inplace = True)
+        df = df.merge(response, on = 'fiscalDateEnding')
+
+        r = get_data(ticker,'EARNINGS','W6ASJZ1LC2DTIE1T')
+        response = pd.DataFrame(r['quarterlyEarnings'])
+        df = df.merge(response, on = 'fiscalDateEnding')
 
     return df.head(1)
 
@@ -64,3 +72,5 @@ def  clean_data(df):
     df  = pipeline.transform(df)
 
     return df
+
+
