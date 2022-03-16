@@ -57,12 +57,12 @@ with left_column:
 
                     df=merge_data(ticker)
                     ticker_to_predict=clean_data(df)
-                    response=model.predict(ticker_to_predict)[0]
+                    response=model.predict(ticker_to_predict)
 
 
 
 
-                    if response == 1:
+                    if response >0.5:
                         st.markdown('### There is {response[0][1]:.2%} of chance that the share performs better than the market next year')
                     else:
                         st.markdown("### There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year")
