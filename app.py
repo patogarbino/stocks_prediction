@@ -29,7 +29,7 @@ names = pd.read_csv("company_names.csv")
 with st.container():
     st.title("Stock market performance prediction")
     st.write(
-        "Choose a tick and predict the performance of a share against the market performance"
+        "Choose a ticker and predict the performance of a share in accordance with the market performance next year"
     )
 
 
@@ -57,15 +57,15 @@ with left_column:
 
                 df=merge_data(ticker)
                 ticker_to_predict=clean_data(df)
-                response=model.predict(ticker_to_predict)[0]
+                response=model.predict_proba(ticker_to_predict)
 
 
 
 
-                if response == 1:
-                    st.markdown('### There is 70% of chance that the share performs better than the market next year')
+                if response[0][1] > 0.5:
+                    st.markdown(f'###  There is  {response[0][1]} of chance that the share performs better than the market next year')
                 else:
-                    st.markdown("### There is 70% of chance that the share doesn't perform better than the market next year")
+                    st.markdown(f"### There is{response[0][0]} of chance that the share doesn't perform better than the market next year")
 
             except:
                 st.write('### Try again later')
