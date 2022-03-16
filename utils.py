@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 from sklearn.impute import SimpleImputer
-from sklearn.pipeline import make_pipeline
+from sklearn.compose import make_column_transformer
 import numpy as np
 
 def get_data(ticker, function,key):
@@ -16,7 +16,7 @@ def get_data(ticker, function,key):
 
 def merge_data (ticker):
 
-    df = pd.read_df('data/stocks_quarterly.csv')
+    df = pd.read_csv('data/stocks_quarterly.csv')
     tickers = list(df.symbol.unique())
 
     if ticker in tickers :
@@ -49,28 +49,32 @@ def merge_data (ticker):
 
 
 def  clean_data(df):
-    cols_to_drop = ['proceedsFromSaleOfTreasuryStock','paymentsForRepurchaseOfPreferredStock','dividendPayoutPreferredStock',
-                'proceedsFromOperatingActivities','proceedsFromIssuanceOfPreferredStock','changeInExchangeRate','investmentIncomeNet',
-                'deferredRevenue','depreciation','capitalLeaseObligations','treasuryStock','proceedsFromIssuanceOfCommonStock',
-                'longTermDebtNoncurrent','researchAndDevelopment','paymentsForRepurchaseOfCommonStock','investments',
-                'accumulatedDepreciationAmortizationPPE','proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet',
-                'proceedsFromRepaymentsOfShortTermDebt','changeInInventory','paymentsForRepurchaseOfEquity','currentDebt',
-                'interestIncome','shortTermInvestments','dividendPayoutCommonStock','longTermInvestments','dividendPayout',
-                'currentAccountsPayable','currentNetReceivables','inventory','paymentsForOperatingActivities',
-                'otherNonOperatingIncome','goodwill','interestAndDebtExpense','changeInReceivables','currentLongTermDebt',
-                'nonInterestIncome','changeInOperatingLiabilities','intangibleAssetsExcludingGoodwill','shortTermDebt',
-                'changeInOperatingAssets','otherNonCurrentLiabilities','intangibleAssets','longTermDebt','netInterestIncome',
-                'fiscalDateEnding','reportedDate']
+    cols = ['grossProfit', 'totalRevenue', 'costOfRevenue',
+       'costofGoodsAndServicesSold', 'operatingIncome',
+       'sellingGeneralAndAdministrative', 'operatingExpenses',
+       'interestExpense', 'depreciationAndAmortization', 'incomeBeforeTax',
+       'incomeTaxExpense', 'netIncomeFromContinuingOperations',
+       'comprehensiveIncomeNetOfTax', 'ebit', 'ebitda', 'netIncome_x',
+       'totalAssets', 'totalCurrentAssets',
+       'cashAndCashEquivalentsAtCarryingValue', 'cashAndShortTermInvestments',
+       'totalNonCurrentAssets', 'propertyPlantEquipment', 'otherCurrentAssets',
+       'otherNonCurrrentAssets', 'totalLiabilities', 'totalCurrentLiabilities',
+       'totalNonCurrentLiabilities', 'shortLongTermDebtTotal',
+       'otherCurrentLiabilities', 'totalShareholderEquity', 'retainedEarnings',
+       'commonStock', 'commonStockSharesOutstanding', 'operatingCashflow',
+       'depreciationDepletionAndAmortization', 'capitalExpenditures',
+       'profitLoss', 'cashflowFromInvestment', 'cashflowFromFinancing',
+       'proceedsFromRepurchaseOfEquity', 'changeInCashAndCashEquivalents',
+       'netIncome_y', 'reportedEPS', 'estimatedEPS', 'surprise',
+       'surprisePercentage']
 
     preproc_data = pd.read_csv('data/preproc_data.csv')
 
-    df.drop(columns = cols_to_drop,inplace = True)
     df = df.replace('None',np.nan)
+    column_transformer = make_column_transformer((SimpleImputer(strategy='median'),cols),
+                                            remainder="passthrough")
 
-    pipeline = make_pipeline(SimpleImputer(strategy='median'))
-    pipeline.fit(preproc_data)
-    df  = pipeline.transform(df)
+    column_transformer.fit(preproc_data)
+    df  = column_transformer.transform(df)
 
     return df
-
-
