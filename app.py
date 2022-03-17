@@ -36,7 +36,7 @@ st.markdown(""" <style> .red { color:#EE0E0E  ;}
 with st.container():
     st.title("Stock market performance prediction")
     st.write(
-        "Choose a ticker and predict the performance of a share in accordance with the market performance"
+        "Choose a ticker and predict the performance of a share in accordance with the market performance next year"
     )
 
 
