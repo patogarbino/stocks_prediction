@@ -66,7 +66,7 @@ with left_column:
                     ticker_to_predict=clean_data(df)
                     response=model.predict_proba(ticker_to_predict)
 
-                    st.markdown('<h3 class="green">Le Wagon</p>', unsafe_allow_html=True)
+
 
 
 
