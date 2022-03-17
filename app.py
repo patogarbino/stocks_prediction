@@ -23,6 +23,13 @@ def load_lottieurl(url: str):
 names = pd.read_csv("company_names.csv")
 
 
+st.markdown(""" <style> .green { color:#47AB53 ;}
+</style> """, unsafe_allow_html=True)
+
+st.markdown(""" <style> .red { color:#EE0E0E  ;}
+</style> """, unsafe_allow_html=True)
+
+
 
 
 # ---- HEADER SECTION ----
@@ -59,13 +66,14 @@ with left_column:
                     ticker_to_predict=clean_data(df)
                     response=model.predict_proba(ticker_to_predict)
 
+                    st.markdown('<h3 class="green">Le Wagon</p>', unsafe_allow_html=True)
 
 
 
                     if response [0][1] > 0.5:
-                        st.markdown(<h3 style='color:rgb(89,194,32)'>f" There is {response[0][1]:.2%} of chance that the share performs better than the market next year"</h3>)
+                        st.markdown(f" <h3 class='green'> There is {response[0][1]:.2%} of chance that the share performs better than the market next year </h3>", unsafe_allow_html=True)
                     else:
-                        st.markdown(<h3 style= 'color:rgb(235,15,15)'>f" There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year"</h3>)
+                        st.markdown(f"<h3 class='red'> There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year</h3>", unsafe_allow_html=True)
 
                 except:
                     st.write('### Try again later')
