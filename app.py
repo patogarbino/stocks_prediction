@@ -63,9 +63,9 @@ with left_column:
 
 
                     if response [0][1] > 0.5:
-                        st.markdown(f"<h3 style='color:rgb(89,194,32)'> There is {response[0][1]:.2%} of chance that the share performs better than the market next year</h3>")
+                        st.markdown(<h3 style='color:rgb(89,194,32)'>f" There is {response[0][1]:.2%} of chance that the share performs better than the market next year"</h3>)
                     else:
-                        st.markdown(f"<h3 style= 'color:rgb(235,15,15)'> There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year</h3>")
+                        st.markdown(<h3 style= 'color:rgb(235,15,15)'>f" There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year"</h3>)
 
                 except:
                     st.write('### Try again later')
