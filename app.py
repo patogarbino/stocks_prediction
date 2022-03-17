@@ -29,7 +29,7 @@ names = pd.read_csv("company_names.csv")
 with st.container():
     st.title("Stock market performance prediction")
     st.write(
-        "Choose a tick and predict the performance of a share against the market performance"
+        "Choose a ticker and predict the performance of a share in accordance with the market performance"
     )
 
 
@@ -63,9 +63,9 @@ with left_column:
 
 
                     if response [0][1] > 0.5:
-                        st.markdown(f"### There is {response[0][1]:.2%} of chance that the share performs better than the market next year")
+                        st.markdown(f"<h3 style='color:rgb(89,194,32)'> There is {response[0][1]:.2%} of chance that the share performs better than the market next year</h3>")
                     else:
-                        st.markdown(f"### There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year")
+                        st.markdown(f"<h3 style= 'color:rgb(235,15,15)'> There is {response[0][0]:.2%} of chance that the share doesn't perform better than the market next year</h3>")
 
                 except:
                     st.write('### Try again later')
